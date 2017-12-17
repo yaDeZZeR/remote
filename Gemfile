@@ -28,6 +28,7 @@ gem 'dotenv-rails'
 # Users
 gem 'devise'
 
+gem 'rails_admin', '~> 1.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

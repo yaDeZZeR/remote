@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-
-  root to: "static_pages#index"
+  
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  root to: redirect('/admin')
 
   devise_for :users
   namespace :api do
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
         post 'sessions' => 'sessions#create', :as => 'login'
         delete 'sessions' => 'sessions#destroy', :as => 'logout'
         post 'registrations' => 'registrations#create', :as => 'register'
+        resources :remote_devices,  only: [:index]
       end
     end
   end

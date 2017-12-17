@@ -8,8 +8,10 @@ class User < ActiveRecord::Base
 
   before_save :ensure_authentication_token
 
+  has_many :remote_devices
+
   validates :login, presence: true, uniqueness: true
-  validates :password_confirmation, presence: true
+  #validates :password_confirmation, presence: true
 
   def ensure_authentication_token
     if authentication_token.blank?
@@ -32,5 +34,9 @@ class User < ActiveRecord::Base
         token = Devise.friendly_token
         break token unless User.where(authentication_token: token).first
       end
+    end
+    
+    def custom_name_method
+      self.login
     end
 end
