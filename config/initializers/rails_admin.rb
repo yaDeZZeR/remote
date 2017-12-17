@@ -46,6 +46,9 @@ RailsAdmin.config do |config|
         field :login do
           label "Логин"
         end
+        field :password do
+          label "Пароль"
+        end
         field :ip_address do
           label "IP адрес"
         end
