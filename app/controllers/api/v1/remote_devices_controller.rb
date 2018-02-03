@@ -15,6 +15,18 @@ class Api::V1::RemoteDevicesController < Api::V1::BaseController
 		end
 	end
 
+	def set_control
+		simple_json_response("Set control") do
+			device = current_user.remote_devices.where({id: params[:device_id]}).first
+			unless device.nil?
+				device.update_attributes({is_connect: params[:is_connect]})
+				current_user.update_attributes({ip_address: request.remote_ip})
+			else
+				raise UserException.new("Device ID not exist for current user")
+			end
+		end
+	end
+
 	def index
 		simple_json_response("Control Device") do
 			device = current_user.remote_devices.where({id: params[:device_id]}).first
@@ -24,7 +36,8 @@ class Api::V1::RemoteDevicesController < Api::V1::BaseController
 				raise UserException.new("Device ID not exist for current user")
 			end
 			i = {
-				control_ip: RemoteDevice.where({id: params[:device_id]}).first.user.ip_address,
+				control_ip: current_user.ip_address,
+				is_connect: device.is_connect,
 				translation_info: {
 					video_qualite: device.video_qualite
 				}

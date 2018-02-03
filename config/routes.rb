@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         post 'sessions' => 'sessions#create', :as => 'login'
         delete 'sessions' => 'sessions#destroy', :as => 'logout'
         post 'registrations' => 'registrations#create', :as => 'register'
+        get 'remote_devices/set_control' => 'remote_devices#set_control', :as => 'set_control'
         resources :remote_devices,  only: [:index]
       end
     end
